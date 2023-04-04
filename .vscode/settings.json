@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/williamwu/Downloads/Selenium/selenium-java-4.8.3/selenium-api-4.8.3-sources.jar",
+        "/Users/williamwu/Downloads/Selenium/selenium-java-4.8.3/**/*.jar"
+    ]
+}

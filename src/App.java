@@ -1,5 +1,4 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.io.*;
@@ -65,10 +64,10 @@ public class App {
             System.out.println("b: Calculate your car's carbon emissions");
             System.out.println("c: Calculate your home's carbon emissions");
             String [][]converted = csvConversion();
-            System.out.println("enter row");
-            int a = input.nextInt();
             System.out.println("enter column");
             int b = input.nextInt();
+            System.out.println("enter row");
+            int a = input.nextInt();
             System.out.println(converted[a][b]);
             input.nextLine();
 

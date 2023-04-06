@@ -9,7 +9,7 @@ public class App {
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }
-    public static void wattage(){
+    public static int findWattage(){
         Scanner input = new Scanner(System.in);
         WebDriver driver = new ChromeDriver();
         clearScreen();
@@ -23,13 +23,9 @@ public class App {
         System.out.println("Your PC's estimated wattage: ");
         System.out.println(wattage);
         int wattageNum = Integer.parseInt((wattage).replace("W","").trim());
-        if(wattageNum>171){
-            System.out.println("Your PC uses above average wattage. Some ways you can save energy:");
-        }else{
-            System.out.println("Good job, your PC consumes less energy than average!");
-        }
         driver.quit();
         input.close();
+        return wattageNum;
     }
     public static String [][] csvConversion() throws FileNotFoundException {
         Scanner readFile = new Scanner(new File("src/sorted_vehicles.csv"));
@@ -76,19 +72,21 @@ public class App {
             if(completedMenu){
                 System.out.println("d: Get recommendations to reduce your carbon footprint");
             }
-            String [][]converted = csvConversion();
-            System.out.println("enter column");
-            int b = input.nextInt();
-            System.out.println("enter row");
-            int a = input.nextInt();
-            System.out.println(converted[a][b]);
-            input.nextLine();
+            //temporary comment
+            // String [][]converted = csvConversion();
+            
+            // System.out.println("enter column");
+            // int b = input.nextInt();
+            // System.out.println("enter row");
+            // int a = input.nextInt();
+            // System.out.println(converted[a][b]);
+            // input.nextLine();
 
             String menu_option = input.nextLine();
             switch(menu_option){
                 case "a":
-                    System.out.println("Option A");
-                    input.nextLine();
+                    clearScreen();
+                    findWattage();
                     break;
                 case "b":
                     System.out.println("Option B");

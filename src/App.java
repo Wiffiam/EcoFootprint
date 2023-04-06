@@ -32,7 +32,7 @@ public class App {
         input.close();
     }
     public static String [][] csvConversion() throws FileNotFoundException {
-        Scanner readFile = new Scanner(new File("/Users/williamwu/ICS4U/ICSEnvironmentProject/src/vehicles.csv"));
+        Scanner readFile = new Scanner(new File("src/sorted_vehicles.csv"));
         List<List<String>> dataList = new ArrayList<>();
 
         while(readFile.hasNext()){
@@ -51,9 +51,19 @@ public class App {
                 csvFile[r][c]=dataList.get(r).get(c);
             }
         }
+        //make: column 46
+        //year: column 63
         return csvFile;
     }
+    public static void carCarbon(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("What model year is your car?");
+        int carYear = input.nextInt();
+        System.out.println("What make is your car?");
+        String carMake = input.nextLine();
+    }
     public static void main(String[] args) throws FileNotFoundException{
+        boolean completedMenu = false;
         boolean exit = false;
         Scanner input = new Scanner(System.in);
         while(!exit){
@@ -63,6 +73,9 @@ public class App {
             System.out.println("a: Calculate your PC's carbon emissions");
             System.out.println("b: Calculate your car's carbon emissions");
             System.out.println("c: Calculate your home's carbon emissions");
+            if(completedMenu){
+                System.out.println("d: Get recommendations to reduce your carbon footprint");
+            }
             String [][]converted = csvConversion();
             System.out.println("enter column");
             int b = input.nextInt();
@@ -83,6 +96,10 @@ public class App {
                     break;
                 case "c":
                     System.out.println("Option C");
+                    input.nextLine();
+                    break;
+                case "d":
+                    System.out.println("Option D");
                     input.nextLine();
                     break;
                 default:

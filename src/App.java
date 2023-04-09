@@ -67,12 +67,9 @@ public class App {
                 System.out.println(counter+": "+carDatabase[row][47]);
             }
         }
-        for(int a:modelRowIndexes){
-            System.out.println(a);
-        }
-        //avalon
-        System.out.println(carDatabase[23945][47]);
-        System.out.println(carDatabase[23945][15]);
+        int carChoice = input.nextInt();
+        System.out.println(carDatabase[modelRowIndexes.get(carChoice-1)][47]);
+        System.out.println("Gas Mileage: "+ carDatabase[modelRowIndexes.get(carChoice-1)][15]+" combined");
         input.nextLine();
     }
 

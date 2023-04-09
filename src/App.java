@@ -12,7 +12,6 @@ public class App {
     public static int findWattage(){
         Scanner input = new Scanner(System.in);
         WebDriver driver = new ChromeDriver();
-        clearScreen();
         driver.get("https://pcpartpicker.com");
         System.out.println("A window has been opened for you to configure your current computer specifications.");
         System.out.println("What is your PCPartPicker URL?");
@@ -24,7 +23,6 @@ public class App {
         System.out.println(wattage);
         int wattageNum = Integer.parseInt((wattage).replace("W","").trim());
         driver.quit();
-        input.close();
         return wattageNum;
     }
     public static String [][] csvConversion() throws FileNotFoundException {
@@ -48,22 +46,41 @@ public class App {
             }
         }
         //make: column 46
+        //model: column 47
         //year: column 63
         return csvFile;
     }
-    public static void carCarbon(){
+    public static void carCarbon() throws FileNotFoundException{
         Scanner input = new Scanner(System.in);
         System.out.println("What model year is your car?");
-        int carYear = input.nextInt();
+        String carYear = input.nextLine();
         System.out.println("What make is your car?");
         String carMake = input.nextLine();
+        String carDatabase[][] = csvConversion();
+        List<Integer> modelRowIndexes = new ArrayList<Integer>();
+        System.out.println("Select your vehicle from the following options:");
+        int counter = 0;
+        for(int row=0;row<carDatabase.length;row++){
+            if(carDatabase[row][46].equals(carMake)&&carDatabase[row][63].equals(carYear)){
+                counter++;
+                modelRowIndexes.add(row);
+                System.out.println(counter+": "+carDatabase[row][47]);
+            }
+        }
+        for(int a:modelRowIndexes){
+            System.out.println(a);
+        }
+        //avalon
+        System.out.println(carDatabase[23945][47]);
+        System.out.println(carDatabase[23945][15]);
+        input.nextLine();
     }
+
     public static void main(String[] args) throws FileNotFoundException{
         boolean completedMenu = false;
         boolean exit = false;
         Scanner input = new Scanner(System.in);
         while(!exit){
-            clearScreen();
             System.out.println("Welcome to the Carbon Footprint calculator.");
             System.out.println("Please select a menu option:");
             System.out.println("a: Calculate your PC's carbon emissions");
@@ -85,12 +102,11 @@ public class App {
             String menu_option = input.nextLine();
             switch(menu_option){
                 case "a":
-                    clearScreen();
-                    findWattage();
+                    int watts = findWattage();
                     break;
                 case "b":
                     System.out.println("Option B");
-                    input.nextLine();
+                    carCarbon();
                     break;
                 case "c":
                     System.out.println("Option C");
@@ -106,6 +122,5 @@ public class App {
                     break;
             }
         }
-        input.close();
     }
 }

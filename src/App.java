@@ -50,12 +50,15 @@ public class App {
         //year: column 63
         return csvFile;
     }
-    public static void carCarbon() throws FileNotFoundException{
+    public static double carCarbon() throws FileNotFoundException{
         Scanner input = new Scanner(System.in);
         System.out.println("What model year is your car?");
         String carYear = input.nextLine();
         System.out.println("What make is your car?");
         String carMake = input.nextLine();
+        //converts km to miles for use in later calculations
+        System.out.println("How many kilometers do you drive per year?");
+        double milesDriven = (input.nextInt())/1.609;
         String carDatabase[][] = csvConversion();
         List<Integer> modelRowIndexes = new ArrayList<Integer>();
         System.out.println("Select your vehicle from the following options:");
@@ -69,8 +72,11 @@ public class App {
         }
         int carChoice = input.nextInt();
         System.out.println(carDatabase[modelRowIndexes.get(carChoice-1)][47]);
-        System.out.println("Gas Mileage: "+ carDatabase[modelRowIndexes.get(carChoice-1)][15]+" combined");
-        input.nextLine();
+        System.out.println("Gas Mileage: "+ carDatabase[modelRowIndexes.get(carChoice-1)][15]+"mpg combined");
+        double gallonsConsumed = milesDriven/(Integer.parseInt(carDatabase[modelRowIndexes.get(carChoice-1)][15]));
+        double kgCarbon = gallonsConsumed * 8.887;
+        System.out.println(kgCarbon);
+        return kgCarbon;
     }
 
     public static void main(String[] args) throws FileNotFoundException{
@@ -97,13 +103,15 @@ public class App {
             // input.nextLine();
 
             String menu_option = input.nextLine();
+            double carbon = 0;
+            System.out.println(carbon);
             switch(menu_option){
                 case "a":
                     int watts = findWattage();
                     break;
                 case "b":
                     System.out.println("Option B");
-                    carCarbon();
+                    carbon += carCarbon();
                     break;
                 case "c":
                     System.out.println("Option C");
@@ -111,6 +119,7 @@ public class App {
                     break;
                 case "d":
                     System.out.println("Option D");
+                    System.out.println(carbon);
                     input.nextLine();
                     break;
                 default:

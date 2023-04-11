@@ -95,12 +95,20 @@ public class App {
         System.out.println(kgCarbon);
         return kgCarbon;
     }
+    public static double homeCarbon(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Test");
+        
+    }
 
     public static void main(String[] args) throws FileNotFoundException{
+        //initializes 1D array to save the number of times the user has run through each menu option of the program. This will be useful when comparing the user's carbon emissions data
+        int[] calculationsPerformed = {0,0,0};
+        double[] carbon = {0,0,0};
+        double totalCarbon = 0;
         boolean exit = false;
         Scanner input = new Scanner(System.in);
         while(!exit){
-            clearScreen();
             System.out.println("Welcome to the Carbon Footprint calculator.");
             System.out.println("Please select a menu option:");
             System.out.println("a: Calculate your PC's carbon emissions");
@@ -108,26 +116,39 @@ public class App {
             System.out.println("c: Calculate your home's carbon emissions");
             System.out.println("d: Get recommendations to reduce your carbon footprint");
             System.out.println("e: Save results to a text file");
+            System.out.println("f: Reset");
             System.out.println("Press any other key to exit");
 
             String menu_option = input.nextLine();
-            double carbon = 0;
             switch(menu_option){
                 case "a":
-                    double watts = findWattage();
+                    carbon[0] = findWattage();
+                    calculationsPerformed[0]+=1;
                     break;
                 case "b":
-                    carbon += carCarbon();
+                    carbon[1] = carCarbon();
+                    calculationsPerformed[1]+=1;
                     break;
                 case "c":
-                    System.out.println("Option C");
-                    input.nextLine();
+                    carbon[2] = homeCarbon();
+                    calculationsPerformed[2]+=1;
                     break;
                 case "d":
                     System.out.println("Option D");
-                    System.out.println(carbon);
+                    totalCarbon = carbon[0]+carbon[1]+carbon[2];
+                    System.out.println(totalCarbon);
                     input.nextLine();
                     break;
+                case "e":
+                    System.out.println("Option E placeholder");
+                    input.nextLine();
+                    break;
+                case "f":
+                    carbon[0]=carbon[1]=carbon[2] = 0;
+                    calculationsPerformed[0]=calculationsPerformed[1]=calculationsPerformed[2]=0;
+                    System.out.println("Carbon emissions data has been reset");
+                    System.out.println("Press any key to continue");
+                    input.nextLine();
                 default:
                     System.out.println("Goodbye");
                     exit = true;

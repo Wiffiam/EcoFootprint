@@ -137,7 +137,21 @@ public class App {
         return "";
 
     }
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void saveFile(double pc, double car, double home) throws FileNotFoundException, IOException{
+        FileWriter writer = new FileWriter("carbon_results.txt");
+        PrintWriter fOutput = new PrintWriter(writer);
+        System.out.println("Saving carbon emission data to file...");
+        fOutput.printf("PC carbon emissions: %.2f",pc," kg\n");
+        fOutput.printf("Car carbon emissions: %.2f",car," kg\n");
+        fOutput.printf("Home carbon emissions: %.2f",home," kg\n");
+        System.out.println("Finished saving");
+        fOutput.close();
+        writer.close();
+    }
+    public static void main(String[] args) throws FileNotFoundException, IOException{
+        
+
+
         //initializes 1D array to save the number of times the user has run through each menu option of the program. This will be useful when comparing the user's carbon emissions data
         double[] carbon = {0,0,0};
         double totalCarbon = 0;
@@ -172,6 +186,12 @@ public class App {
                     input.nextLine();
                     break;
                 case "d":
+                    //defining average carbon emissions for different categories
+                    double avgPC = 0;
+                    double avgCar = 0;
+                    double avgHome = 0;
+
+
                     totalCarbon = carbon[0]+carbon[1]+carbon[2];
                     clearScreen();
                     System.out.printf("Your total carbon emissions: %.2f",totalCarbon);
@@ -194,12 +214,16 @@ public class App {
                     }else{
                         System.out.println("Please try again");
                     }
+
+                    //add more here
+                    //if(carbon[0])
                     System.out.println("Press any key to continue");
                     input.nextLine();
                     break;
                 case "e":
                     clearScreen();
-                    System.out.println("Option E placeholder");
+                    saveFile(carbon[0],carbon[1],carbon[2]);
+                    System.out.println("Press any key to continue");
                     input.nextLine();
                     break;
                 case "f":

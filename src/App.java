@@ -34,8 +34,8 @@ public class App {
         driver.quit();
         return kgCarbon;
     }
-    public static String [][] csvConversion() throws FileNotFoundException {
-        Scanner readFile = new Scanner(new File("src/sorted_vehicles.csv"));
+    public static String [][] csvConversion(String file) throws FileNotFoundException {
+        Scanner readFile = new Scanner(new File("src/"+file+".csv"));
         List<List<String>> dataList = new ArrayList<>();
 
         while(readFile.hasNext()){
@@ -46,8 +46,8 @@ public class App {
             }
             dataList.add(row);
         }
-        int rows = dataList.size();
-        int columns = dataList.get(0).size();
+        int rows = dataList.size()-1;
+        int columns = dataList.get(0).size()-1;
         String [][]csvFile = new String[rows][columns];
         for(int r=0;r<rows;r++){
             for(int c=0;c<columns;c++){
@@ -72,7 +72,7 @@ public class App {
         double milesDriven = (input.nextInt())/1.609;
 
         //calls upon the csv conversion method in order to get a 2D array containing all US car EPA fuel mileages since 1985
-        String carDatabase[][] = csvConversion();
+        String carDatabase[][] = csvConversion("vehicles");
         //creates a list to store all elements in the 2D array that match the user's model year and make
         List<Integer> modelRowIndexes = new ArrayList<Integer>();
         System.out.println("Select your vehicle from the following options:");
@@ -116,7 +116,23 @@ public class App {
             return kgCarbon;
         }
     }
+    public static String binarySearchCarbonEmissions(String country) throws FileNotFoundException{
+        String[][] co2database = csvConversion("co2data");
+        int left = 0;
+        int right = co2database.length - 1;
+        while(left<=right){
+            int middle = (left+right)/2;
+            if(co2database[middle][0].compareToIgnoreCase(country)<0){
+                left = middle + 1;
+            }else if(co2database[middle][0].compareToIgnoreCase(country)>0){
+                right = middle - 1;
+            }else{
+                return co2database[middle][3];
+            }
+        }
+        return "";
 
+    }
     public static void main(String[] args) throws FileNotFoundException{
         //initializes 1D array to save the number of times the user has run through each menu option of the program. This will be useful when comparing the user's carbon emissions data
         double[] carbon = {0,0,0};
@@ -144,12 +160,29 @@ public class App {
                     break;
                 case "c":
                     carbon[2] = homeCarbon(0);
-                    System.out.println(carbon[2]);
                     break;
                 case "d":
-                    System.out.println("Option D");
                     totalCarbon = carbon[0]+carbon[1]+carbon[2];
-                    System.out.println(totalCarbon);
+                    System.out.printf("Your total carbon emissions: %.2f",totalCarbon);
+                    System.out.print(" kg\n");
+                    System.out.println("What country would you like to compare your carbon footprint to?");
+                    String country = input.nextLine();
+                    double compareEmissions = (Double.parseDouble(binarySearchCarbonEmissions(country))*1000);
+                    System.out.print("The average carbon footprint in "+country+" is ");
+                    System.out.printf("%.2f",compareEmissions);
+                    System.out.print(" kg\n");
+                    double percentage = 0;
+                    if(totalCarbon>compareEmissions){
+                        percentage = totalCarbon/compareEmissions*100;
+                        System.out.printf("Your carbon footprint is %.2f",percentage);
+                        System.out.print("% greater than the average resident of "+country);
+                    }else if(totalCarbon<compareEmissions){
+                        percentage = compareEmissions/totalCarbon*100;
+                        System.out.printf("Your carbon footprint is %.2f",percentage);
+                        System.out.print("% less than the average resident of "+country);
+                    }else{
+                        System.out.println("Please try again");
+                    }
                     input.nextLine();
                     break;
                 case "e":

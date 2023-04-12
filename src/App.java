@@ -60,6 +60,7 @@ public class App {
         return csvFile;
     }
     public static double carCarbon() throws FileNotFoundException{
+        clearScreen();
         //initializes a scanner for the method to capture user inputs
         Scanner input = new Scanner(System.in);
         //gets user's car information
@@ -69,7 +70,7 @@ public class App {
         String carMake = input.nextLine();
         System.out.println("How many kilometers do you drive per year?");
         //converts km to miles for use in later calculations
-        double milesDriven = (input.nextInt())/1.609;
+        double milesDriven = (Integer.parseInt(input.nextLine()))/1.609;
 
         //calls upon the csv conversion method in order to get a 2D array containing all US car EPA fuel mileages since 1985
         String carDatabase[][] = csvConversion("vehicles");
@@ -87,12 +88,15 @@ public class App {
                 System.out.println(counter+": "+carDatabase[row][47]);
             }
         }
-        int carChoice = input.nextInt();
-        System.out.println(carDatabase[modelRowIndexes.get(carChoice-1)][47]);
-        System.out.println("Gas Mileage: "+ carDatabase[modelRowIndexes.get(carChoice-1)][15]+"mpg combined");
+        int carChoice = Integer.parseInt(input.nextLine());
+        System.out.println("Your choice: "+carDatabase[modelRowIndexes.get(carChoice-1)][47]);
+        System.out.println("Gas Mileage: "+ carDatabase[modelRowIndexes.get(carChoice-1)][15]+" mpg combined");
         double gallonsConsumed = milesDriven/(Integer.parseInt(carDatabase[modelRowIndexes.get(carChoice-1)][15]));
         double kgCarbon = gallonsConsumed * 8.887;
-        System.out.println(kgCarbon);
+        System.out.printf("Carbon emissions per year: %.2f",kgCarbon);
+        System.out.print(" kg\n");
+        System.out.println("Press any key to continue");
+        input.nextLine();
         return kgCarbon;
     }
     public static double homeCarbon(int count){
@@ -140,6 +144,7 @@ public class App {
         boolean exit = false;
         Scanner input = new Scanner(System.in);
         while(!exit){
+            clearScreen();
             System.out.println("Welcome to the Carbon Footprint calculator.");
             System.out.println("Please select a menu option:");
             System.out.println("a: Calculate your PC's carbon emissions");
@@ -159,10 +164,16 @@ public class App {
                     carbon[1] = carCarbon();
                     break;
                 case "c":
+                    clearScreen();
                     carbon[2] = homeCarbon(0);
+                    System.out.printf("Your home carbon emissions per year: %.2f",carbon[2]);
+                    System.out.print(" kg\n");
+                    System.out.println("Press any key to continue");
+                    input.nextLine();
                     break;
                 case "d":
                     totalCarbon = carbon[0]+carbon[1]+carbon[2];
+                    clearScreen();
                     System.out.printf("Your total carbon emissions: %.2f",totalCarbon);
                     System.out.print(" kg\n");
                     System.out.println("What country would you like to compare your carbon footprint to?");
@@ -175,22 +186,25 @@ public class App {
                     if(totalCarbon>compareEmissions){
                         percentage = totalCarbon/compareEmissions*100;
                         System.out.printf("Your carbon footprint is %.2f",percentage);
-                        System.out.print("% greater than the average resident of "+country);
+                        System.out.print("% greater than the average resident of "+country+"\n");
                     }else if(totalCarbon<compareEmissions){
                         percentage = compareEmissions/totalCarbon*100;
                         System.out.printf("Your carbon footprint is %.2f",percentage);
-                        System.out.print("% less than the average resident of "+country);
+                        System.out.print("% less than the average resident of "+country+"\n");
                     }else{
                         System.out.println("Please try again");
                     }
+                    System.out.println("Press any key to continue");
                     input.nextLine();
                     break;
                 case "e":
+                    clearScreen();
                     System.out.println("Option E placeholder");
                     input.nextLine();
                     break;
                 case "f":
                     carbon[0]=carbon[1]=carbon[2] = 0;
+                    clearScreen();
                     System.out.println("Carbon emissions data has been reset");
                     System.out.println("Press any key to continue");
                     input.nextLine();

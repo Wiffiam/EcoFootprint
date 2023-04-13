@@ -138,6 +138,7 @@ public class App {
 
     }
     public static void saveFile(double pc, double car, double home) throws FileNotFoundException, IOException{
+        //NEED TO FIX
         FileWriter writer = new FileWriter("carbon_results.txt");
         PrintWriter fOutput = new PrintWriter(writer);
         System.out.println("Saving carbon emission data to file...");

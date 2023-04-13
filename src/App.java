@@ -1,20 +1,49 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import java.io.*;
 import java.util.*;
 
 public class App {
     public static void clearScreen(){
+        //CREDIT https://www.javatpoint.com/how-to-clear-screen-in-java
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }
     public static double findWattage(){
         //initializes scanner and chrome webdriver
         Scanner input = new Scanner(System.in);
+        ChromeOptions options = new ChromeOptions();
+
+        //bot detection bypass is found online
+        //disable bot flags for selenium
+        //CREDIT: https://www.zenrows.com/blog/selenium-avoid-bot-detection#how-websites-detect-selenium
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        options.setExperimentalOption("useAutomationExtension", false);
+        options.addArguments("--disable-blink-features", "AutomationControlled");
+
+        //headless operation
+        //CREDIT: https://www.zenrows.com/blog/selenium-avoid-bot-detection#how-websites-detect-selenium
+        options.addArguments("--headless"); // Use a headless browser to bypass Cloudflare
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        //mimic user agent
+        //CREDIT: https://www.zenrows.com/blog/selenium-avoid-bot-detection#how-websites-detect-selenium
+        options.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36");
+
+        //original code from here
+        //change resolution
+        options.addArguments("--window-size=1920,1080");
+
         WebDriver driver = new ChromeDriver();
+
+        clearScreen();
         //opens a window to the PCPartPicker url
-        driver.get("https://pcpartpicker.com");
+        driver.get("https://pcpartpicker.com/list/");
         System.out.println("A window has been opened for you to configure your current computer specifications.");
         System.out.println("What is your PCPartPicker build URL?");
         String url = input.nextLine();
@@ -152,9 +181,12 @@ public class App {
         FileWriter writer = new FileWriter("carbon_results.txt");
         PrintWriter fOutput = new PrintWriter(writer);
         System.out.println("Saving carbon emission data to file...");
-        fOutput.printf("PC carbon emissions: %.2f",pc," kg\n");
-        fOutput.printf("Car carbon emissions: %.2f",car," kg\n");
-        fOutput.printf("Home carbon emissions: %.2f",home," kg\n");
+        fOutput.printf("PC carbon emissions: %.2f",pc);
+        fOutput.print(" kg\n");
+        fOutput.printf("Car carbon emissions: %.2f",car);
+        fOutput.print(" kg\n");
+        fOutput.printf("Home carbon emissions: %.2f",home);
+        fOutput.print(" kg");
         System.out.println("Finished saving");
         fOutput.close();
         writer.close();
@@ -198,11 +230,6 @@ public class App {
                     break;
                 case "d":
                     //defining average carbon emissions for different categories
-                    double avgPC = 0;
-                    double avgCar = 0;
-                    double avgHome = 0;
-
-
                     totalCarbon = carbon[0]+carbon[1]+carbon[2];
                     clearScreen();
                     System.out.printf("Your total carbon emissions: %.2f",totalCarbon);
@@ -216,17 +243,58 @@ public class App {
                     double percentage = 0;
                     if(totalCarbon>compareEmissions){
                         percentage = totalCarbon/compareEmissions*100;
+                        System.out.println("-------------------------------------------------------------");
                         System.out.printf("Your carbon footprint is %.2f",percentage);
                         System.out.print("% greater than the average resident of "+country+"\n");
+                        System.out.println("-------------------------------------------------------------");
+                        System.out.print("Your biggest source of carbon emissions is");
+                        //pc is largest source of carbon emissions
+                        if(carbon[0]>carbon[1]&&carbon[0]>carbon[2]){
+                            System.out.println(" your computer.");
+                            System.out.println("No offense, but maybe try going outside and touching some grass");
+                            System.out.println("Some ways you can reduce your PC's electricity consumption:");
+                            System.out.println("Turn on power savings mode. The couple of FPS lost is worth saving the planet");
+                            System.out.println("If your PC is very old, consider upgrading to modern technology. Lots of advancements have been made to increase both performance and efficiency over the years.");
+                            System.out.println("If you do plan to do this, make sure to recycle your old PC through ewaste facilities");
+                        }else if(carbon[1]>carbon[0]&&carbon[1]>carbon[2]){
+                            System.out.println(" your car.");
+                            System.out.println("Some ways you can reduce your car's carbon footprint");
+                            System.out.println("Drive more efficiently by avoiding hard acceleration and braking. It's ok to not be a Formula 1 racer in traffic, and you can increase your gas mileage by up to 40% (EPA)!");
+                            System.out.println("You can also increase your mileage by going the speed limit. The EPA estimates that driving over the speed limit can reduce efficiency by up to 14%. It's also much safer");
+                            System.out.println("If your car is very old or low in gas mileage, you can also consider purchasing a hybrid or electric vehicle. These vehicles get much better fuel economy, save you money, and help the environment. Try to buy second hand if you can!");
+                        }else if(carbon[2]>carbon[0]&&carbon[2]>carbon[1]){
+                            System.out.println(" your home.");
+                        }
+
                     }else if(totalCarbon<compareEmissions){
+                        System.out.println("-------------------------------------------------------------");
                         percentage = compareEmissions/totalCarbon*100;
                         System.out.printf("Your carbon footprint is %.2f",percentage);
                         System.out.print("% less than the average resident of "+country+"\n");
+                        System.out.println("-------------------------------------------------------------");
+                        System.out.println("Even though you are doing well compared to the average, here are some ways you can reduce your carbon footprint:");
+                        System.out.print("Your biggest source of carbon emissions is");
+                        if(carbon[0]>carbon[1]&&carbon[0]>carbon[2]){
+                            System.out.println(" your computer.");
+                            System.out.println("No offense, but maybe try going outside and touching some grass");
+                            System.out.println("Some ways you can reduce your PC's electricity consumption:");
+                            System.out.println("Turn on power savings mode. The couple of FPS lost is worth saving the planet");
+                            System.out.println("If your PC is very old, consider upgrading to modern technology. Lots of advancements have been made to increase both performance and efficiency over the years.");
+                            System.out.println("If you do plan to do this, make sure to recycle your old PC through ewaste facilities");
+                        }else if(carbon[1]>carbon[0]&&carbon[1]>carbon[2]){
+                            System.out.println(" your car.");
+                            System.out.println("Some ways you can reduce your car's carbon footprint");
+                            System.out.println("Drive more efficiently by avoiding hard acceleration and braking. It's ok to not be a Formula 1 racer in traffic, and you can increase your gas mileage by up to 40% (EPA)!");
+                            System.out.println("You can also increase your mileage by going the speed limit. The EPA estimates that driving over the speed limit can reduce efficiency by up to 14%. It's also much safer");
+                            System.out.println("If your car is very old or low in gas mileage, you can also consider purchasing a hybrid or electric vehicle. These vehicles get much better fuel economy, save you money, and help the environment. Try to buy second hand if you can!");
+                        }else if(carbon[2]>carbon[0]&&carbon[2]>carbon[1]){
+                            System.out.println(" your home.");
+                        }else{
+                            System.out.println(" unavailable. Please run some of the menu options before comparing.");
+                        }
                     }else{
                         System.out.println("Please try again");
                     }
-
-                    //if(carbon[0])
                     System.out.println("Press any key to continue");
                     input.nextLine();
                     break;

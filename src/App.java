@@ -26,11 +26,14 @@ public class App {
         //debug
         System.out.println("How many hours do you use your PC per day?");
         double usage = input.nextDouble();
+        input.nextLine();
         int wattageNum = Integer.parseInt((wattage).replace("W","").trim());
         double kgCarbon = 0.000433*usage*wattageNum;
-        System.out.println("Your PC's estimated wattage: ");
-        System.out.println(wattage);
-        System.out.println("Your PC's estimated carbon emissions per year: ");
+        System.out.println("Your PC's estimated wattage: "+wattage);
+        System.out.printf("Your PC's estimated carbon emissions per year: %.2f",kgCarbon);
+        System.out.print(" kg\n");
+        System.out.println("Press any key to continue");
+        input.nextLine();
         driver.quit();
         return kgCarbon;
     }
@@ -139,6 +142,13 @@ public class App {
     }
     public static void saveFile(double pc, double car, double home) throws FileNotFoundException, IOException{
         //NEED TO FIX
+        //NEED
+        //DHJASHDSAHJHDSA
+        // SADJKFDAJSDAS
+        // DHJASHDSAHJHDSADSA
+        // DocAttributeSetDAS
+        // DocAttributeSetDASADS
+        // ADS
         FileWriter writer = new FileWriter("carbon_results.txt");
         PrintWriter fOutput = new PrintWriter(writer);
         System.out.println("Saving carbon emission data to file...");
@@ -216,7 +226,6 @@ public class App {
                         System.out.println("Please try again");
                     }
 
-                    //add more here
                     //if(carbon[0])
                     System.out.println("Press any key to continue");
                     input.nextLine();

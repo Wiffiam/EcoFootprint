@@ -170,14 +170,6 @@ public class App {
 
     }
     public static void saveFile(double pc, double car, double home) throws FileNotFoundException, IOException{
-        //NEED TO FIX
-        //NEED
-        //DHJASHDSAHJHDSA
-        // SADJKFDAJSDAS
-        // DHJASHDSAHJHDSADSA
-        // DocAttributeSetDAS
-        // DocAttributeSetDASADS
-        // ADS
         FileWriter writer = new FileWriter("carbon_results.txt");
         PrintWriter fOutput = new PrintWriter(writer);
         System.out.println("Saving carbon emission data to file...");
@@ -247,23 +239,27 @@ public class App {
                         System.out.printf("Your carbon footprint is %.2f",percentage);
                         System.out.print("% greater than the average resident of "+country+"\n");
                         System.out.println("-------------------------------------------------------------");
-                        System.out.print("Your biggest source of carbon emissions is");
+                        System.out.print("Your biggest source of carbon emissions is:");
                         //pc is largest source of carbon emissions
                         if(carbon[0]>carbon[1]&&carbon[0]>carbon[2]){
                             System.out.println(" your computer.");
-                            System.out.println("No offense, but maybe try going outside and touching some grass");
+                            System.out.println("No offense, but maybe try going outside and touching some grass.");
                             System.out.println("Some ways you can reduce your PC's electricity consumption:");
-                            System.out.println("Turn on power savings mode. The couple of FPS lost is worth saving the planet");
+                            System.out.println("Turn on power savings mode. The couple of FPS lost is worth saving the planet.");
                             System.out.println("If your PC is very old, consider upgrading to modern technology. Lots of advancements have been made to increase both performance and efficiency over the years.");
-                            System.out.println("If you do plan to do this, make sure to recycle your old PC through ewaste facilities");
+                            System.out.println("If you do plan to do this, make sure to recycle your old PC through ewaste facilities.");
                         }else if(carbon[1]>carbon[0]&&carbon[1]>carbon[2]){
                             System.out.println(" your car.");
-                            System.out.println("Some ways you can reduce your car's carbon footprint");
+                            System.out.println("Some ways you can reduce your car's carbon footprint.");
                             System.out.println("Drive more efficiently by avoiding hard acceleration and braking. It's ok to not be a Formula 1 racer in traffic, and you can increase your gas mileage by up to 40% (EPA)!");
-                            System.out.println("You can also increase your mileage by going the speed limit. The EPA estimates that driving over the speed limit can reduce efficiency by up to 14%. It's also much safer");
+                            System.out.println("You can also increase your mileage by going the speed limit. The EPA estimates that driving over the speed limit can reduce efficiency by up to 14%. It's also much safer.");
                             System.out.println("If your car is very old or low in gas mileage, you can also consider purchasing a hybrid or electric vehicle. These vehicles get much better fuel economy, save you money, and help the environment. Try to buy second hand if you can!");
                         }else if(carbon[2]>carbon[0]&&carbon[2]>carbon[1]){
                             System.out.println(" your home.");
+                            System.out.println("An easy way to save electricity at home is to turn off the lights when you are not using them. You can also upgrade incandescant light bulbs to LED or ENERGY STAR bulbs to save up to 75% of the energy.");
+                            System.out.println("A great way to reduce your natural gas bill is to use less hot water by doing washing your clothes with cold water. You can also turn on the vacation mode on your furnace when you are away for extended periods of time.");
+                            System.out.println("You can also check if your home is insulated properly. Most home carbon emissions and electricity/natural gas costs come from losses associated with improperly insulated homes.");
+                            System.out.println("Make sure to check with your local government to see if there are incentives for upgrading to more efficient furnaces/air conditioning and other major appliances.");
                         }
 
                     }else if(totalCarbon<compareEmissions){
@@ -273,22 +269,27 @@ public class App {
                         System.out.print("% less than the average resident of "+country+"\n");
                         System.out.println("-------------------------------------------------------------");
                         System.out.println("Even though you are doing well compared to the average, here are some ways you can reduce your carbon footprint:");
-                        System.out.print("Your biggest source of carbon emissions is");
+                        System.out.println("-------------------------------------------------------------");
+                        System.out.print("Your biggest source of carbon emissions is:");
                         if(carbon[0]>carbon[1]&&carbon[0]>carbon[2]){
                             System.out.println(" your computer.");
                             System.out.println("No offense, but maybe try going outside and touching some grass");
                             System.out.println("Some ways you can reduce your PC's electricity consumption:");
-                            System.out.println("Turn on power savings mode. The couple of FPS lost is worth saving the planet");
+                            System.out.println("Turn on power savings mode. The couple of FPS lost is worth saving the planet.");
                             System.out.println("If your PC is very old, consider upgrading to modern technology. Lots of advancements have been made to increase both performance and efficiency over the years.");
-                            System.out.println("If you do plan to do this, make sure to recycle your old PC through ewaste facilities");
+                            System.out.println("If you do plan to do this, make sure to recycle your old PC through ewaste facilities.");
                         }else if(carbon[1]>carbon[0]&&carbon[1]>carbon[2]){
                             System.out.println(" your car.");
                             System.out.println("Some ways you can reduce your car's carbon footprint");
                             System.out.println("Drive more efficiently by avoiding hard acceleration and braking. It's ok to not be a Formula 1 racer in traffic, and you can increase your gas mileage by up to 40% (EPA)!");
-                            System.out.println("You can also increase your mileage by going the speed limit. The EPA estimates that driving over the speed limit can reduce efficiency by up to 14%. It's also much safer");
+                            System.out.println("You can also increase your mileage by going the speed limit. The EPA estimates that driving over the speed limit can reduce efficiency by up to 14%. It's also much safer.");
                             System.out.println("If your car is very old or low in gas mileage, you can also consider purchasing a hybrid or electric vehicle. These vehicles get much better fuel economy, save you money, and help the environment. Try to buy second hand if you can!");
                         }else if(carbon[2]>carbon[0]&&carbon[2]>carbon[1]){
                             System.out.println(" your home.");
+                            System.out.println("An easy way to save electricity at home is to turn off the lights when you are not using them. You can also upgrade incandescant light bulbs to LED or ENERGY STAR bulbs to save up to 75% of the energy.");
+                            System.out.println("A great way to reduce your natural gas bill is to use less hot water by doing washing your clothes with cold water. You can also turn on the vacation mode on your furnace when you are away for extended periods of time.");
+                            System.out.println("You can also check if your home is insulated properly. Most home carbon emissions and electricity/natural gas costs come from losses associated with improperly insulated homes.");
+                            System.out.println("Make sure to check with your local government to see if there are incentives for upgrading to more efficient furnaces/air conditioning and other major appliances.");
                         }else{
                             System.out.println(" unavailable. Please run some of the menu options before comparing.");
                         }

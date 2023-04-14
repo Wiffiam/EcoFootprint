@@ -1,0 +1,3 @@
+PC carbon emissions: 1599.42 kg
+Car carbon emissions: 1472.88 kg
+Home carbon emissions: 3129.70 kg

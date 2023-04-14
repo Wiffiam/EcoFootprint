@@ -325,7 +325,7 @@ public class App {
             //clears the screen of clutter when the user is directed to the menu
             clearScreen();
             //prompts the user to input a menu selection
-            System.out.println("Welcome to the Carbon Footprint calculator.");
+            System.out.println("Welcome to the EcoFootprint calculator.");
             System.out.println("Please select a menu option:");
             System.out.println("a: Calculate your PC's carbon emissions");
             System.out.println("b: Calculate your car's carbon emissions");

@@ -4,6 +4,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import java.io.*;
 import java.util.*;
+import java.lang.*;
 
 public class App {
     /**
@@ -374,12 +375,12 @@ public class App {
                     //compares the user's carbon footprint versus the specified country
                     if(totalCarbon>compareEmissions){
                         //calculates how much more the user emits than the country and outputs the percentage
-                        percentage = totalCarbon/compareEmissions*100;
+                        percentage = (totalCarbon-compareEmissions)/Math.abs(compareEmissions)*100;
                         System.out.println("-------------------------------------------------------------");
                         System.out.printf("Your carbon footprint is %.2f",percentage);
                         System.out.print("% greater than the average resident of "+country+"\n");
                         System.out.println("-------------------------------------------------------------");
-                        System.out.print("Your biggest source of carbon emissions is:");
+                        System.out.print("Your biggest source of carbon emissions is");
                         //pc is largest source of carbon emissions
                         //gives tips to reduce PC power consumption
                         if(carbon[0]>carbon[1]&&carbon[0]>carbon[2]){
@@ -409,13 +410,13 @@ public class App {
                     //same as above but calculates how much percent less carbon the user emits compared to the specified country
                     }else if(totalCarbon<compareEmissions){
                         System.out.println("-------------------------------------------------------------");
-                        percentage = compareEmissions/totalCarbon*100;
+                        percentage = (compareEmissions-totalCarbon)/Math.abs(compareEmissions)*100;
                         System.out.printf("Your carbon footprint is %.2f",percentage);
                         System.out.print("% less than the average resident of "+country+"\n");
                         System.out.println("-------------------------------------------------------------");
                         System.out.println("Even though you are doing well compared to the average, here are some ways you can reduce your carbon footprint:");
                         System.out.println("-------------------------------------------------------------");
-                        System.out.print("Your biggest source of carbon emissions is:");
+                        System.out.print("Your biggest source of carbon emissions is");
                         if(carbon[0]>carbon[1]&&carbon[0]>carbon[2]){
                             System.out.println(" your computer.");
                             System.out.println("No offense, but maybe try going outside and touching some grass");
